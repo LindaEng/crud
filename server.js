@@ -10,15 +10,31 @@ const { Music } = require('./Models/Music')
 //invoke our seed function
 seed()
 
+app.use(express.json())
 //ROUTES
 
-//C
+//C - post
+app.post('/music', async (req, res) => {
+    let newSong = req.body
+    await Music.create(newSong)
+    res.send(`New song added~`)
+})
 
-//R
+//R - get
+app.get('/music', async (req, res) => {
+    let allMusic = await Music.findAll()
+    res.json({allMusic})
+})
 
-//U
+app.get('/music/:id', async (req, res) => {
+    let id = req.params.id
+    let oneSong = await Music.findByPk(id)
+    res.json({oneSong})
+})
 
-//D
+//U - put
+
+//D - delete
 
 
 app.listen(PORT, () => {
