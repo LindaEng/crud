@@ -13,7 +13,10 @@ seed()
 app.use(express.json())
 //ROUTES
 
-//EXERCISE: Clean up the code
+//EXERCISE: 
+    //1. Check if routes are RESTful
+    //2. Req.body is not referencing the payload from the client side... it's currently {}
+    //3. A user only wants a specific genre of music, write a RESTful route/endpoint that will return the specified genre
 
 //C - post
 app.post('/getmusic', async (req, res) => {
