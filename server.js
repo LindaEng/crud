@@ -2,6 +2,7 @@
 const express = require('express')
 const app = express()
 const PORT = 3000
+const { body, validationResult } = require('express-validator') 
 
 const seed = require('./seed')
 const { db } = require('./db')
@@ -34,9 +35,28 @@ app.post('/music', async (req, res) => {
 //Fails - Returns an error message
 //Passes - Returns a 201 status, return json with the new user
 
+//C-Create-POST R U D
 
+app.post('/user',
+    body('username').isEmail(),
+    body('password').isLength({ min: 5 }),
+    async (req, res) => {
+    const errors = validationResult(req)
+    if(!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() })
+    }
+    const newUser = {
+        username: req.body.username,
+        password: req.body.password
+    }
+    res.send(`A new user has been created`).json({newUser})
+})
 
-//Exercise
+//Exercise 
+// 1. create a User model
+// 2. create a user.json file
+// 3. make sure you seed the user information into your db
+// 4. Write a RESTful route that will validate the new user info and add it to the DB.
 
 //R - get
 app.get('/music', async (req, res) => {
